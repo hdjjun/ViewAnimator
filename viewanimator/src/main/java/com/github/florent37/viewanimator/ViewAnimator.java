@@ -22,7 +22,7 @@ public class ViewAnimator {
     private static final long DEFAULT_DURATION = 3000;
 
     private List<AnimationBuilder> animationList = new ArrayList<>();
-    private long duration = DEFAULT_DURATION;
+    private long duration = -1;
     private long startDelay = 0;
     private Interpolator interpolator = null;
 
@@ -95,7 +95,9 @@ public class ViewAnimator {
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(animators);
 
-        animatorSet.setDuration(duration);
+        if(this.duration >= 0) {
+            animatorSet.setDuration(duration);
+        }
         animatorSet.setStartDelay(startDelay);
         if (interpolator != null)
             animatorSet.setInterpolator(interpolator);

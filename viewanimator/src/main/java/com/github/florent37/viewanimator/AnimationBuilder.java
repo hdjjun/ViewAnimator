@@ -29,7 +29,8 @@ public class AnimationBuilder {
     private final List<Animator> animatorList = new ArrayList<>();
     private boolean waitForHeight;
     private boolean nextValueWillBeDp = false;
-    private long startDelay = 0l;
+    private long startDelay = 0L;
+    private long duration = -1;
     private Interpolator singleInterpolator = null;
 
     /**
@@ -112,6 +113,9 @@ public class AnimationBuilder {
         for (View view : views) {
             ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, propertyName, getValues(values));
             objectAnimator.setStartDelay(this.startDelay);
+            if(this.duration >= 0){
+                objectAnimator.setDuration(this.duration);
+            }
             this.animatorList.add(objectAnimator);
         }
         return this;
@@ -256,6 +260,9 @@ public class AnimationBuilder {
             ObjectAnimator objectAnimator = ObjectAnimator.ofInt(view, "backgroundColor", colors);
             objectAnimator.setEvaluator(new ArgbEvaluator());
             objectAnimator.setStartDelay(this.startDelay);
+            if(this.duration >= 0){
+                objectAnimator.setDuration(this.duration);
+            }
             this.animatorList.add(objectAnimator);
         }
         return this;
@@ -273,6 +280,9 @@ public class AnimationBuilder {
                 ObjectAnimator objectAnimator = ObjectAnimator.ofInt(view, "textColor", colors);
                 objectAnimator.setEvaluator(new ArgbEvaluator());
                 objectAnimator.setStartDelay(this.startDelay);
+                if(this.duration >= 0){
+                    objectAnimator.setDuration(this.duration);
+                }
                 this.animatorList.add(objectAnimator);
             }
         }
@@ -290,6 +300,9 @@ public class AnimationBuilder {
         for (final View view : views) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(getValues(values));
             valueAnimator.setStartDelay(this.startDelay);
+            if(this.duration >= 0){
+                valueAnimator.setDuration(this.duration);
+            }
             if (update != null)
                 valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
@@ -382,6 +395,17 @@ public class AnimationBuilder {
      */
     public AnimationBuilder duration(long duration) {
         viewAnimator.duration(duration);
+        return this;
+    }
+
+    /**
+     * Duration of current view animator.
+     *
+     * @param duration the duration
+     * @return the animation builder
+     */
+    public AnimationBuilder setCurrentDuration(long duration) {
+        this.duration = duration;
         return this;
     }
 

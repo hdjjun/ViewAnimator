@@ -3,7 +3,11 @@ ViewAnimator
 
 [![API](https://img.shields.io/badge/API-11%2B-green.svg)](https://github.com/florent37/ViewAnimator/tree/master)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-ViewAnimator-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/2942)
-**AnimationBuilder增加setCurrentStartDelay用于设置单个animator的延时,必须紧跟在andAnimate/thenAnimate调用,否则无效**
+
+**1. AnimationBuilder增加setCurrentStartDelay用于设置单个animator的延时,必须紧跟在andAnimate/thenAnimate调用,否则无效**
+
+**2. 增加setCurrentDuration用于设置单个animator持续时长,必须紧跟在andAnimate/thenAnimate调用,否则无效**
+
 
 A fluent Android animation library !
 
