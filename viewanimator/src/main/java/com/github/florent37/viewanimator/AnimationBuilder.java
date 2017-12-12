@@ -29,6 +29,7 @@ public class AnimationBuilder {
     private final List<Animator> animatorList = new ArrayList<>();
     private boolean waitForHeight;
     private boolean nextValueWillBeDp = false;
+    private long startDelay = 0l;
     private Interpolator singleInterpolator = null;
 
     /**
@@ -109,7 +110,9 @@ public class AnimationBuilder {
      */
     public AnimationBuilder property(String propertyName, float... values) {
         for (View view : views) {
-            this.animatorList.add(ObjectAnimator.ofFloat(view, propertyName, getValues(values)));
+            ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, propertyName, getValues(values));
+            objectAnimator.setStartDelay(this.startDelay);
+            this.animatorList.add(objectAnimator);
         }
         return this;
     }
@@ -252,6 +255,7 @@ public class AnimationBuilder {
         for (View view : views) {
             ObjectAnimator objectAnimator = ObjectAnimator.ofInt(view, "backgroundColor", colors);
             objectAnimator.setEvaluator(new ArgbEvaluator());
+            objectAnimator.setStartDelay(this.startDelay);
             this.animatorList.add(objectAnimator);
         }
         return this;
@@ -268,6 +272,7 @@ public class AnimationBuilder {
             if (view instanceof TextView) {
                 ObjectAnimator objectAnimator = ObjectAnimator.ofInt(view, "textColor", colors);
                 objectAnimator.setEvaluator(new ArgbEvaluator());
+                objectAnimator.setStartDelay(this.startDelay);
                 this.animatorList.add(objectAnimator);
             }
         }
@@ -284,6 +289,7 @@ public class AnimationBuilder {
     public AnimationBuilder custom(final AnimationListener.Update update, float... values) {
         for (final View view : views) {
             ValueAnimator valueAnimator = ValueAnimator.ofFloat(getValues(values));
+            valueAnimator.setStartDelay(this.startDelay);
             if (update != null)
                 valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                     @Override
@@ -387,6 +393,17 @@ public class AnimationBuilder {
      */
     public AnimationBuilder startDelay(long startDelay) {
         viewAnimator.startDelay(startDelay);
+        return this;
+    }
+
+    /**
+     * Start delay of current view animator.
+     *
+     * @param startDelay the start delay
+     * @return the animation builder
+     */
+    public AnimationBuilder setCurrentStartDelay(long startDelay) {
+        this.startDelay = startDelay;
         return this;
     }
 
